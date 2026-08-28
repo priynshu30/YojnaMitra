@@ -49,6 +49,10 @@ app.use('/api/admin', adminRoutes);
 // Error handling middleware
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`[YojnaMitra Server] Running on http://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production' || process.env.RENDER || process.env.PORT) {
+  app.listen(PORT, () => {
+    console.log(`[YojnaMitra Server] Running on http://localhost:${PORT}`);
+  });
+}
+
+export default app;
