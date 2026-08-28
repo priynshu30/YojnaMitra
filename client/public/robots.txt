@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://yojnamitra.vercel.app/sitemap.xml
+Sitemap: https://yojna-mitra-gold.vercel.app/sitemap.xml
