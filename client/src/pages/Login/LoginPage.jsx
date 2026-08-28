@@ -35,16 +35,6 @@ const LoginPage = () => {
     }
   };
 
-  const fillCitizenDemo = () => {
-    setEmail('citizen@yojnamitra.in');
-    setPassword('User@123');
-  };
-
-  const fillAdminDemo = () => {
-    setEmail('admin@yojnamitra.in');
-    setPassword('Admin@123');
-  };
-
   return (
     <div className="max-w-md mx-auto px-4 py-12 space-y-6">
       
@@ -108,29 +98,6 @@ const LoginPage = () => {
             <span>{loading ? (lang === 'hi' ? 'लॉगिन हो रहा है...' : 'Logging in...') : (lang === 'hi' ? 'लॉगिन करें →' : 'Log In →')}</span>
           </button>
         </form>
-
-        {/* 1-Click Quick Demo Login Shortcuts */}
-        <div className="pt-4 border-t border-brand-border/60 space-y-2">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-brand-textMuted block text-center">
-            {lang === 'hi' ? 'त्वरित परीक्षण (Demo Login):' : 'Instant Demo Credentials:'}
-          </span>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={fillCitizenDemo}
-              className="p-2 rounded-xl border border-brand-border bg-brand-warmBg text-xs font-semibold text-brand-navy hover:border-brand-green transition-colors text-center"
-            >
-              🧑 {lang === 'hi' ? 'नागरिक खाता' : 'Citizen Demo'}
-            </button>
-            <button
-              type="button"
-              onClick={fillAdminDemo}
-              className="p-2 rounded-xl border border-brand-border bg-brand-warmBg text-xs font-semibold text-brand-navy hover:border-brand-green transition-colors text-center"
-            >
-              🔒 {lang === 'hi' ? 'एडमिन खाता' : 'Admin Demo'}
-            </button>
-          </div>
-        </div>
 
         <div className="text-center pt-2 text-xs text-brand-textMuted">
           <span>{lang === 'hi' ? 'खाता नहीं है?' : "Don't have an account?"}{' '}</span>

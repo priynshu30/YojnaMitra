@@ -3,14 +3,16 @@ import User from '../models/User.js';
 import { generateToken } from '../middleware/auth.js';
 import { getDBStatus } from '../config/db.js';
 
+const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'admin@gmail.com').toLowerCase();
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Priyanshu@123';
+
 // In-memory user store for memory mode
 const memoryUsers = [
   {
     id: 'user_admin_1',
     _id: 'user_admin_1',
-    name: 'YojnaMitra Admin',
-    email: 'admin@yojnamitra.in',
-    passwordHash: '$2a$10$tZ2R86k8xHaui8sXfI8x2.3m/bWkP9/j07G706nOQcSmPjF7aQhXG', // Admin@123
+    name: 'Priyanshu (Admin)',
+    email: ADMIN_EMAIL,
     role: 'admin',
     language: 'hi',
     savedSchemes: []
@@ -136,8 +138,8 @@ export const login = async (req, res) => {
 
     const { isFallbackMode } = getDBStatus();
 
-    // Default fast-track login for seeded credentials in memory mode
-    if (email.toLowerCase() === 'admin@yojnamitra.in' && password === 'Admin@123') {
+    // Secure Admin Login check
+    if (email.toLowerCase() === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
       const adminUser = memoryUsers[0];
       const token = generateToken(adminUser);
       return res.json({
@@ -148,7 +150,7 @@ export const login = async (req, res) => {
           id: adminUser.id || adminUser._id,
           name: adminUser.name,
           email: adminUser.email,
-          role: adminUser.role,
+          role: 'admin',
           profile: adminUser.profile || {},
           savedSchemes: adminUser.savedSchemes || []
         }

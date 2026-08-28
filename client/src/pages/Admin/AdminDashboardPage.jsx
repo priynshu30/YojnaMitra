@@ -188,6 +188,40 @@ const AdminDashboardPage = () => {
     needsVerificationCount: 0
   };
 
+  if (!isAdmin) {
+    return (
+      <div className="max-w-md mx-auto px-4 py-20 text-center space-y-4 animate-fadeIn">
+        <div className="w-16 h-16 rounded-3xl bg-red-50 text-red-600 flex items-center justify-center mx-auto shadow-sm border border-red-200">
+          <ShieldCheck className="w-8 h-8" />
+        </div>
+        <div className="space-y-1">
+          <h2 className="text-xl font-black text-[#142338]">
+            {lang === 'hi' ? '🔒 केवल अधिकृत एडमिन के लिए' : '🔒 Admin Access Required'}
+          </h2>
+          <p className="text-xs text-[#5A6A6A] leading-relaxed">
+            {lang === 'hi'
+              ? 'यह पेज केवल YojnaMitra के आधिकारिक एडमिन के लिए आरक्षित है। कृपया सही एडमिन क्रेडेंशियल्स से लॉगिन करें।'
+              : 'This management console is strictly restricted to verified administrators.'}
+          </p>
+        </div>
+        <div className="pt-3 flex gap-2 justify-center">
+          <button
+            onClick={() => navigate('/login')}
+            className="px-6 py-2.5 rounded-xl bg-[#168447] text-white text-xs font-bold shadow-md hover:bg-[#126338]"
+          >
+            {lang === 'hi' ? 'एडमिन लॉगिन करें' : 'Admin Login'}
+          </button>
+          <button
+            onClick={() => navigate('/')}
+            className="px-4 py-2.5 rounded-xl border border-[#E5E8E5] text-xs font-semibold text-[#142338] hover:bg-slate-50"
+          >
+            {lang === 'hi' ? 'होमपेज जाएं' : 'Go Home'}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
       
