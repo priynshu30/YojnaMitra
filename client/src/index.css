@@ -1,0 +1,278 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-green: #168447;
+  --brand-navy: #142338;
+  --brand-warmBg: #FAF9F5;
+  --brand-greenLight: #EAF6EE;
+  --brand-border: #E5E8E5;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #FAF9F5;
+  color: #142338;
+  font-family: 'Inter', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── GLOBAL MOBILE SAFETY ─── */
+*, *::before, *::after { box-sizing: border-box; }
+html { overflow-x: hidden; }
+body { overflow-x: hidden; }
+
+/* Prevent wide SVGs from causing scroll */
+svg { max-width: 100%; }
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #FAF9F5; }
+::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+.text-balance { text-wrap: balance; }
+
+/* Devanagari headline smoothing */
+.hindi-headline {
+  font-family: 'Noto Sans Devanagari', 'Inter', sans-serif;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+/* ─────────────────────────────────────────────────
+   ENTRANCE ANIMATIONS
+───────────────────────────────────────────────── */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeLeft {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeRight {
+  from { opacity: 0; transform: translateX(-32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-48px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ─────────────────────────────────────────────────
+   CONTINUOUS / LOOPING ANIMATIONS
+───────────────────────────────────────────────── */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-12px) rotate(2deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(22, 132, 71, 0.22); }
+  50%       { box-shadow: 0 0 0 10px rgba(22, 132, 71, 0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -800px 0; }
+  100% { background-position: 800px 0; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-4px); }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes wave {
+  0%   { transform: rotate(0deg); }
+  15%  { transform: rotate(14deg); }
+  30%  { transform: rotate(-8deg); }
+  40%  { transform: rotate(14deg); }
+  50%  { transform: rotate(-4deg); }
+  60%  { transform: rotate(10deg); }
+  70%  { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* ─────────────────────────────────────────────────
+   ANIMATION UTILITY CLASSES
+───────────────────────────────────────────────── */
+
+.animate-fadeIn    { animation: fadeIn    0.25s ease-out forwards; }
+.animate-fadeUp    { animation: fadeUp    0.55s ease-out forwards; }
+.animate-fadeDown  { animation: fadeDown  0.45s ease-out forwards; }
+.animate-fadeLeft  { animation: fadeLeft  0.5s  ease-out forwards; }
+.animate-fadeRight { animation: fadeRight 0.5s  ease-out forwards; }
+.animate-scaleIn   { animation: scaleIn   0.4s  ease-out forwards; }
+.animate-slideInLeft { animation: slideInLeft 0.5s ease-out forwards; }
+
+.animate-float      { animation: float      3s ease-in-out infinite; }
+.animate-floatSlow  { animation: floatSlow  5s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulse-glow 2.5s ease-in-out infinite; }
+.animate-spin-slow  { animation: spin-slow  12s linear infinite; }
+.animate-bounce-subtle { animation: bounce-subtle 2s ease-in-out infinite; }
+.animate-wave       { animation: wave 2s linear; }
+
+/* Shimmer loading skeleton */
+.animate-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 37%, #f0f0f0 63%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+
+/* Marquee ticker */
+.animate-marquee { animation: marquee 28s linear infinite; }
+
+/* ─────────────────────────────────────────────────
+   DELAY UTILITIES (for staggered entrances)
+───────────────────────────────────────────────── */
+.delay-75   { animation-delay: 75ms; }
+.delay-100  { animation-delay: 100ms; }
+.delay-150  { animation-delay: 150ms; }
+.delay-200  { animation-delay: 200ms; }
+.delay-300  { animation-delay: 300ms; }
+.delay-400  { animation-delay: 400ms; }
+.delay-500  { animation-delay: 500ms; }
+.delay-600  { animation-delay: 600ms; }
+.delay-700  { animation-delay: 700ms; }
+.delay-800  { animation-delay: 800ms; }
+
+/* ─────────────────────────────────────────────────
+   SCROLL-TRIGGERED REVEAL (Intersection Observer)
+   Applied via JS — starts as .reveal, becomes .reveal-visible
+───────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+}
+.reveal.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+}
+.reveal-left.reveal-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.93);
+  transition: opacity 0.55s ease-out, transform 0.55s ease-out;
+}
+.reveal-scale.reveal-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ─────────────────────────────────────────────────
+   HOVER EFFECTS
+───────────────────────────────────────────────── */
+
+/* Lift + shadow */
+.hover-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(20, 35, 56, 0.08);
+}
+
+/* Glow on hover */
+.hover-glow:hover {
+  box-shadow: 0 0 0 3px rgba(22, 132, 71, 0.18), 0 8px 24px rgba(22, 132, 71, 0.10);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Smooth scale */
+.hover-scale {
+  transition: transform 0.2s ease;
+}
+.hover-scale:hover {
+  transform: scale(1.035);
+}
+
+/* ─────────────────────────────────────────────────
+   GRADIENT SHIMMER BUTTON (Premium CTA)
+───────────────────────────────────────────────── */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -75%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255,255,255,0.25) 50%,
+    transparent 70%
+  );
+  transform: skewX(-20deg);
+  transition: none;
+}
+.btn-shimmer:hover::after {
+  animation: shimmer-sweep 0.6s ease forwards;
+}
+
+@keyframes shimmer-sweep {
+  from { left: -75%; }
+  to   { left: 125%; }
+}
+
+/* ─────────────────────────────────────────────────
+   SCROLLBAR HIDDEN
+───────────────────────────────────────────────── */
+.scrollbar-none::-webkit-scrollbar { display: none; }
+.scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
