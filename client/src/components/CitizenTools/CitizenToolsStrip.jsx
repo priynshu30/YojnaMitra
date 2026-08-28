@@ -116,15 +116,15 @@ const CitizenToolsStrip = () => {
     },
     {
       id: 'documents',
-      titleHi: 'दस्तावेज तैयारी गाइड',
-      titleEn: 'Document Readiness Checklist',
-      descHi: 'आधार, आय, बैंक खाता रेडीनेस चेक करें',
-      descEn: 'Check essential documents before applying',
-      badgeHi: '📋 1-Click Check',
-      badgeEn: '📋 1-Click Check',
+      titleHi: 'सरकारी PDF व 200KB टूल्स',
+      titleEn: 'Govt PDF & 200KB Tools',
+      descHi: 'फोटो से PDF बनाएं, 200KB कंप्रेस व पासपोर्ट फोटो रिसाइज़र',
+      descEn: 'Convert photos to PDF, compress to <200KB & resize photo',
+      badgeHi: '📄 iLovePDF Tool',
+      badgeEn: '📄 PDF Suite',
       color: 'from-[#EFF6FF] to-[#DBEAFE]',
       btnBg: 'bg-[#2563EB] text-white hover:bg-[#1D4ED8]',
-      action: () => navigate('/faq'),
+      action: () => navigate('/pdf-tools'),
       icon: (
         <div className="w-12 h-12 rounded-2xl bg-[#2563EB] text-white flex items-center justify-center shadow-md">
           <FileText className="w-6 h-6" />

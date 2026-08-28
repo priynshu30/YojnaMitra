@@ -123,6 +123,18 @@ const Navbar = () => {
             </Link>
 
             <Link
+              to="/pdf-tools"
+              className={`px-3 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center gap-1.5 ${
+                location.pathname === '/pdf-tools'
+                  ? 'text-brand-green bg-brand-greenLight'
+                  : 'text-brand-navy hover:text-brand-green hover:bg-black/5'
+              }`}
+            >
+              <span className="text-[#168447] font-bold">📄</span>
+              <span>{lang === 'hi' ? 'PDF टूल्स' : 'PDF Tools'}</span>
+            </Link>
+
+            <Link
               to="/faq"
               className={`px-3 py-2 rounded-lg text-sm font-semibold transition-colors ${
                 location.pathname === '/faq'
@@ -288,6 +300,14 @@ const Navbar = () => {
               className="px-3 py-2.5 rounded-lg text-sm font-medium text-brand-navy hover:bg-brand-greenLight hover:text-brand-green"
             >
               {t.nav.about}
+            </Link>
+            <Link
+              to="/pdf-tools"
+              onClick={handleNavClick}
+              className="px-3 py-2.5 rounded-lg text-sm font-medium text-brand-navy hover:bg-brand-greenLight hover:text-brand-green flex items-center gap-2"
+            >
+              <span>📄</span>
+              <span>{lang === 'hi' ? 'दस्तावेज़ व PDF टूल्स (iLovePDF)' : 'PDF & Document Tools'}</span>
             </Link>
             <Link
               to="/faq"

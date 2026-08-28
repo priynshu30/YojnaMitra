@@ -92,6 +92,12 @@ const Footer = () => {
                   </Link>
                 </div>
                 <div>
+                  <Link to="/pdf-tools" className="hover:text-[#168447] transition-colors flex items-center gap-1.5 font-bold text-[#168447]">
+                    <span>📄</span>
+                    <span>{lang === 'hi' ? 'दस्तावेज़ व PDF टूल्स' : 'PDF & Document Tools'}</span>
+                  </Link>
+                </div>
+                <div>
                   <Link to="/about" className="hover:text-[#168447] transition-colors flex items-center gap-1.5">
                     <span className="text-[#168447] font-bold">•</span>
                     <span>{lang === 'hi' ? 'हमारे बारे में' : 'About Us'}</span>

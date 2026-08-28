@@ -14,6 +14,7 @@ import RegisterPage from './pages/Register/RegisterPage';
 import ProfilePage from './pages/Profile/ProfilePage';
 import SavedSchemesPage from './pages/SavedSchemes/SavedSchemesPage';
 import AdminDashboardPage from './pages/Admin/AdminDashboardPage';
+import PdfToolsPage from './pages/PdfTools/PdfToolsPage';
 import { AuthProvider } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { SavedSchemesProvider } from './context/SavedSchemesContext';
@@ -53,6 +54,8 @@ function App() {
                   <Route path="/results" element={<ResultsPage />} />
                   <Route path="/about" element={<AboutPage />} />
                   <Route path="/faq" element={<FAQPage />} />
+                  <Route path="/pdf-tools" element={<PdfToolsPage />} />
+                  <Route path="/document-tools" element={<PdfToolsPage />} />
                   <Route path="/login" element={<LoginPage />} />
                   <Route path="/register" element={<RegisterPage />} />
                   <Route path="/profile" element={<ProfilePage />} />
