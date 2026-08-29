@@ -9,7 +9,8 @@ import {
   ShieldCheck,
   LogOut,
   ChevronDown,
-  ArrowRight
+  ArrowRight,
+  FileText
 } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
@@ -38,159 +39,143 @@ const Navbar = () => {
     setUserDropdownOpen(false);
   };
 
+  const isNavActive = (path, param) => {
+    if (param) return location.search.includes(param);
+    return location.pathname === path && !location.search.includes('level=State');
+  };
+
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
+      className={`sticky top-0 z-50 transition-all duration-200 ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-soft border-b border-brand-border py-2.5'
-          : 'bg-brand-warmBg border-b border-brand-border/60 py-3.5'
+          ? 'bg-white/95 backdrop-blur-md shadow-soft border-b border-brand-border py-2'
+          : 'bg-[#FCFDFB] border-b border-[#E5E9E2]/80 py-2.5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-4">
+        
+        {/* ── 3-Column Perfectly Balanced Grid Layout ── */}
+        <div className="flex items-center justify-between gap-3 lg:grid lg:grid-cols-12 lg:gap-4">
           
-          {/* Brand Logo & Tagline */}
-          <Link
-            to="/"
-            onClick={handleNavClick}
-            className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-green/30 rounded-lg p-1"
-          >
-            <div className="w-10 h-10 rounded-full bg-brand-green flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform duration-200">
-              <svg className="w-6 h-6" viewBox="0 0 100 100" fill="none">
-                <circle cx="50" cy="50" r="46" fill="#168447"/>
-                <path d="M50 22C42 35 34 50 34 62C34 71 41 78 50 78C59 78 66 71 66 62C66 50 58 35 50 22Z" fill="#FFFFFF" fillOpacity="0.95"/>
-                <path d="M50 34C46 44 40 56 40 64C40 70 45 74 50 74C55 74 60 70 60 64C60 56 54 44 50 34Z" fill="#168447"/>
-                <circle cx="50" cy="50" r="6" fill="#FFFFFF"/>
-              </svg>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-2xl font-black tracking-tight text-brand-navy leading-none">
-                Yojna<span className="text-brand-green">Mitra</span>
-              </span>
-              <span className="text-[11px] font-medium text-brand-textMuted mt-0.5">
-                {lang === 'hi' ? 'आपका साथी, आपकी योजनाएँ' : 'Your Schemes Companion'}
-              </span>
-            </div>
-          </Link>
+          {/* Left Column: Official Logo (lg:col-span-3) */}
+          <div className="flex items-center lg:col-span-3">
+            <Link
+              to="/"
+              onClick={handleNavClick}
+              className="flex items-center group focus:outline-none rounded-lg p-0.5 shrink-0"
+            >
+              <img
+                src="/logo.png"
+                alt="YojanaMitra Logo"
+                className="h-9 sm:h-10 md:h-11 w-auto object-contain transition-transform duration-200 group-hover:scale-102"
+              />
+            </Link>
+          </div>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
+          {/* Center Column: Symmetrically Centered Navigation (lg:col-span-6) */}
+          <nav className="hidden lg:flex items-center justify-center gap-1.5 lg:col-span-6">
             <Link
               to="/schemes"
-              className={`px-3 py-2 rounded-lg text-sm font-semibold transition-colors ${
-                location.pathname === '/schemes' && !location.search.includes('level=State')
-                  ? 'text-brand-green bg-brand-greenLight'
-                  : 'text-brand-navy hover:text-brand-green hover:bg-black/5'
+              className={`px-3 py-1.5 rounded-xl text-[13.5px] font-semibold transition-all ${
+                isNavActive('/schemes')
+                  ? 'text-brand-green bg-[#EAF6EE] font-bold shadow-2xs'
+                  : 'text-brand-navy hover:text-brand-green hover:bg-[#EAF6EE]/50'
               }`}
             >
-              {t.nav.schemes}
+              {lang === 'hi' ? 'सभी योजनाएँ' : 'All Schemes'}
             </Link>
 
             <Link
               to="/schemes?level=State"
-              className={`px-3 py-2 rounded-lg text-sm font-semibold transition-colors ${
-                location.search.includes('level=State')
-                  ? 'text-brand-green bg-brand-greenLight'
-                  : 'text-brand-navy hover:text-brand-green hover:bg-black/5'
+              className={`px-3 py-1.5 rounded-xl text-[13.5px] font-semibold transition-all ${
+                isNavActive('/schemes', 'level=State')
+                  ? 'text-brand-green bg-[#EAF6EE] font-bold shadow-2xs'
+                  : 'text-brand-navy hover:text-brand-green hover:bg-[#EAF6EE]/50'
               }`}
             >
-              {t.nav.stateSchemes}
+              {lang === 'hi' ? 'राज्य योजनाएँ' : 'State Schemes'}
             </Link>
 
             <Link
-              to="/#categories"
-              className="px-3 py-2 rounded-lg text-sm font-semibold text-brand-navy hover:text-brand-green hover:bg-black/5 transition-colors"
-            >
-              {t.nav.categories}
-            </Link>
-
-            <Link
-              to="/#how-it-works"
-              className="px-3 py-2 rounded-lg text-sm font-semibold text-brand-navy hover:text-brand-green hover:bg-black/5 transition-colors"
-            >
-              {t.nav.howItWorks}
-            </Link>
-
-            <Link
-              to="/about"
-              className={`px-3 py-2 rounded-lg text-sm font-semibold transition-colors ${
-                location.pathname === '/about'
-                  ? 'text-brand-green bg-brand-greenLight'
-                  : 'text-brand-navy hover:text-brand-green hover:bg-black/5'
+              to="/eligibility"
+              className={`px-3 py-1.5 rounded-xl text-[13.5px] font-semibold transition-all ${
+                isNavActive('/eligibility')
+                  ? 'text-brand-green bg-[#EAF6EE] font-bold shadow-2xs'
+                  : 'text-brand-navy hover:text-brand-green hover:bg-[#EAF6EE]/50'
               }`}
             >
-              {t.nav.about}
+              {lang === 'hi' ? 'पात्रता जांच' : 'Eligibility'}
             </Link>
 
             <Link
               to="/pdf-tools"
-              className={`px-3 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center gap-1.5 ${
-                location.pathname === '/pdf-tools'
-                  ? 'text-brand-green bg-brand-greenLight'
-                  : 'text-brand-navy hover:text-brand-green hover:bg-black/5'
+              className={`px-3 py-1.5 rounded-xl text-[13.5px] font-semibold transition-all flex items-center gap-1.5 ${
+                isNavActive('/pdf-tools')
+                  ? 'text-brand-green bg-[#EAF6EE] font-bold shadow-2xs'
+                  : 'text-brand-navy hover:text-brand-green hover:bg-[#EAF6EE]/50'
               }`}
             >
-              <span className="text-[#168447] font-bold">📄</span>
+              <FileText className="w-3.5 h-3.5 text-[#168447]" />
               <span>{lang === 'hi' ? 'PDF टूल्स' : 'PDF Tools'}</span>
             </Link>
 
             <Link
-              to="/faq"
-              className={`px-3 py-2 rounded-lg text-sm font-semibold transition-colors ${
-                location.pathname === '/faq'
-                  ? 'text-brand-green bg-brand-greenLight'
-                  : 'text-brand-navy hover:text-brand-green hover:bg-black/5'
+              to="/about"
+              className={`px-3 py-1.5 rounded-xl text-[13.5px] font-semibold transition-all ${
+                isNavActive('/about')
+                  ? 'text-brand-green bg-[#EAF6EE] font-bold shadow-2xs'
+                  : 'text-brand-navy hover:text-brand-green hover:bg-[#EAF6EE]/50'
               }`}
             >
-              {t.nav.faq}
+              {lang === 'hi' ? 'हमारे बारे में' : 'About'}
             </Link>
           </nav>
 
-          {/* Right Controls: Language, Saved, Login/Profile, Primary CTA */}
-          <div className="hidden sm:flex items-center gap-2.5">
+          {/* Right Column: Unified Action Controls (lg:col-span-3, right-aligned) */}
+          <div className="hidden sm:flex items-center justify-end gap-2 lg:col-span-3">
+            
             {/* Language Switcher */}
             <button
               onClick={toggleLanguage}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-brand-border bg-white text-xs font-semibold text-brand-navy hover:border-brand-green hover:text-brand-green transition-all shadow-2xs"
-              title="Switch Language"
+              className="h-9 flex items-center gap-1.5 px-2.5 rounded-xl border border-brand-border bg-white text-xs font-semibold text-brand-navy hover:border-brand-green hover:text-brand-green transition-all shadow-2xs cursor-pointer shrink-0"
+              title="Switch Language / भाषा बदलें"
             >
               <Globe className="w-3.5 h-3.5 text-brand-green" />
               <span>{lang === 'hi' ? 'English' : 'हिन्दी'}</span>
             </button>
 
-            {/* Saved Schemes Bookmark Link */}
+            {/* Saved Schemes Bookmark */}
             <Link
               to="/saved-schemes"
-              className="relative p-2 rounded-lg border border-brand-border bg-white text-brand-navy hover:border-brand-green hover:text-brand-green transition-all shadow-2xs"
-              title="सुरक्षित योजनाएँ"
+              className="relative h-9 w-9 flex items-center justify-center rounded-xl border border-brand-border bg-white text-brand-navy hover:border-brand-green hover:text-brand-green transition-all shadow-2xs shrink-0"
+              title={lang === 'hi' ? 'सुरक्षित योजनाएँ' : 'Saved Schemes'}
             >
               <Bookmark className="w-4 h-4" />
               {savedCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-brand-green text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
+                <span className="absolute -top-1 -right-1 bg-brand-green text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
                   {savedCount}
                 </span>
               )}
             </Link>
 
-            {/* User Dropdown / Login */}
+            {/* User Profile / Login */}
             {isAuthenticated ? (
               <div className="relative">
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-brand-border bg-white text-xs font-semibold text-brand-navy hover:border-brand-green transition-all"
+                  className="h-9 flex items-center gap-1.5 px-2.5 rounded-xl border border-brand-border bg-white text-xs font-semibold text-brand-navy hover:border-brand-green transition-all cursor-pointer"
                 >
-                  <div className="w-6 h-6 rounded-full bg-brand-greenLight text-brand-green flex items-center justify-center font-bold">
+                  <div className="w-5 h-5 rounded-full bg-brand-greenLight text-brand-green flex items-center justify-center font-bold text-xs">
                     {user.name ? user.name[0].toUpperCase() : 'U'}
                   </div>
-                  <span className="max-w-[100px] truncate">{user.name}</span>
-                  <ChevronDown className="w-3.5 h-3.5 text-brand-textMuted" />
+                  <span className="max-w-[75px] truncate">{user.name}</span>
+                  <ChevronDown className="w-3 h-3 text-brand-textMuted" />
                 </button>
 
                 {userDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-elevated border border-brand-border py-1.5 z-50">
-                    <div className="px-3 py-2 border-b border-brand-border/60">
-                      <p className="text-xs text-brand-textMuted">लॉग इन:</p>
-                      <p className="text-xs font-semibold text-brand-navy truncate">{user.email}</p>
+                  <div className="absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-elevated border border-brand-border py-1.5 z-50">
+                    <div className="px-3 py-1.5 border-b border-brand-border/60">
+                      <p className="text-[11px] font-semibold text-brand-navy truncate">{user.email}</p>
                     </div>
                     {isAdmin && (
                       <Link
@@ -215,7 +200,7 @@ const Navbar = () => {
                         logout();
                         setUserDropdownOpen(false);
                       }}
-                      className="w-full flex items-center gap-2 px-3 py-2 text-xs font-medium text-red-600 hover:bg-red-50 text-left"
+                      className="w-full text-left flex items-center gap-2 px-3 py-2 text-xs font-medium text-red-600 hover:bg-red-50 cursor-pointer"
                     >
                       <LogOut className="w-4 h-4" />
                       {t.nav.logout}
@@ -226,33 +211,33 @@ const Navbar = () => {
             ) : (
               <Link
                 to="/login"
-                className="px-3.5 py-1.5 rounded-lg border border-brand-border bg-white text-xs font-semibold text-brand-navy hover:border-brand-green hover:text-brand-green transition-all"
+                className="h-9 inline-flex items-center px-3 rounded-xl border border-brand-border bg-white text-xs font-semibold text-brand-navy hover:border-brand-green hover:text-brand-green transition-all shadow-2xs shrink-0"
               >
-                {t.nav.login}
+                {lang === 'hi' ? 'लॉगिन' : 'Login'}
               </Link>
             )}
 
-            {/* Primary CTA button */}
+            {/* Primary Action CTA */}
             <Link
               to="/eligibility"
-              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-green text-white text-xs font-bold shadow-sm hover:bg-brand-greenHover hover:shadow-card transition-all active:scale-95"
+              className="h-9 inline-flex items-center gap-1.5 px-3.5 rounded-xl bg-brand-green text-white text-xs font-bold shadow-xs hover:bg-brand-greenHover transition-all shrink-0 cursor-pointer"
             >
-              <span>{t.nav.cta}</span>
+              <span>{lang === 'hi' ? 'पात्रता जांचें' : 'Check Eligibility'}</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
-          {/* Mobile Menu Trigger */}
-          <div className="flex sm:hidden items-center gap-2">
+          {/* Mobile Hamburger Controls */}
+          <div className="flex items-center gap-2 lg:hidden">
             <button
               onClick={toggleLanguage}
-              className="px-2 py-1 rounded-md border border-brand-border bg-white text-xs font-medium text-brand-navy"
+              className="h-8 px-2.5 rounded-lg border border-brand-border bg-white text-xs font-bold text-brand-navy cursor-pointer"
             >
               {lang === 'hi' ? 'EN' : 'हि'}
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-brand-navy hover:bg-black/5 focus:outline-none"
+              className="p-1.5 rounded-lg text-brand-navy hover:bg-black/5 focus:outline-none cursor-pointer"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -262,99 +247,76 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-brand-border px-4 pt-3 pb-6 space-y-3 animate-fadeIn">
+        <div className="lg:hidden bg-white border-b border-brand-border px-4 pt-3 pb-5 space-y-3 animate-fadeIn">
           <nav className="flex flex-col space-y-1">
             <Link
               to="/schemes"
               onClick={handleNavClick}
-              className="px-3 py-2.5 rounded-lg text-sm font-medium text-brand-navy hover:bg-brand-greenLight hover:text-brand-green"
+              className="px-3 py-2 rounded-lg text-sm font-semibold text-brand-navy hover:bg-brand-greenLight hover:text-brand-green"
             >
-              {t.nav.schemes}
+              {lang === 'hi' ? '📋 सभी सरकारी योजनाएँ' : '📋 All Schemes'}
             </Link>
             <Link
               to="/schemes?level=State"
               onClick={handleNavClick}
-              className="px-3 py-2.5 rounded-lg text-sm font-medium text-brand-navy hover:bg-brand-greenLight hover:text-brand-green"
+              className="px-3 py-2 rounded-lg text-sm font-semibold text-brand-navy hover:bg-brand-greenLight hover:text-brand-green"
             >
-              {t.nav.stateSchemes}
+              {lang === 'hi' ? '🏛️ राज्य सरकार योजनाएँ' : '🏛️ State Schemes'}
             </Link>
             <Link
-              to="/#categories"
+              to="/eligibility"
               onClick={handleNavClick}
-              className="px-3 py-2.5 rounded-lg text-sm font-medium text-brand-navy hover:bg-brand-greenLight hover:text-brand-green"
+              className="px-3 py-2 rounded-lg text-sm font-semibold text-brand-navy hover:bg-brand-greenLight hover:text-brand-green"
             >
-              {t.nav.categories}
-            </Link>
-            <Link
-              to="/#how-it-works"
-              onClick={handleNavClick}
-              className="px-3 py-2.5 rounded-lg text-sm font-medium text-brand-navy hover:bg-brand-greenLight hover:text-brand-green"
-            >
-              {t.nav.howItWorks}
-            </Link>
-            <Link
-              to="/about"
-              onClick={handleNavClick}
-              className="px-3 py-2.5 rounded-lg text-sm font-medium text-brand-navy hover:bg-brand-greenLight hover:text-brand-green"
-            >
-              {t.nav.about}
+              {lang === 'hi' ? '🎯 2-मिनट पात्रता कैलकुलेटर' : '🎯 Eligibility Checker'}
             </Link>
             <Link
               to="/pdf-tools"
               onClick={handleNavClick}
-              className="px-3 py-2.5 rounded-lg text-sm font-medium text-brand-navy hover:bg-brand-greenLight hover:text-brand-green flex items-center gap-2"
+              className="px-3 py-2 rounded-lg text-sm font-semibold text-brand-navy hover:bg-brand-greenLight hover:text-brand-green flex items-center gap-2"
             >
               <span>📄</span>
-              <span>{lang === 'hi' ? 'दस्तावेज़ व PDF टूल्स (iLovePDF)' : 'PDF & Document Tools'}</span>
-            </Link>
-            <Link
-              to="/faq"
-              onClick={handleNavClick}
-              className="px-3 py-2.5 rounded-lg text-sm font-medium text-brand-navy hover:bg-brand-greenLight hover:text-brand-green"
-            >
-              {t.nav.faq}
+              <span>{lang === 'hi' ? 'दस्तावेज़ व PDF टूल्स' : 'PDF & Document Tools'}</span>
             </Link>
             <Link
               to="/saved-schemes"
               onClick={handleNavClick}
-              className="px-3 py-2.5 rounded-lg text-sm font-medium text-brand-navy hover:bg-brand-greenLight hover:text-brand-green flex items-center justify-between"
+              className="px-3 py-2 rounded-lg text-sm font-semibold text-brand-navy hover:bg-brand-greenLight hover:text-brand-green flex items-center justify-between"
             >
-              <span>{t.nav.savedSchemes}</span>
+              <span>{lang === 'hi' ? '🔖 सुरक्षित योजनाएँ' : '🔖 Saved Schemes'}</span>
               {savedCount > 0 && (
                 <span className="bg-brand-green text-white text-xs px-2 py-0.5 rounded-full font-bold">
                   {savedCount}
                 </span>
               )}
             </Link>
+            <Link
+              to="/about"
+              onClick={handleNavClick}
+              className="px-3 py-2 rounded-lg text-sm font-semibold text-brand-navy hover:bg-brand-greenLight hover:text-brand-green"
+            >
+              {lang === 'hi' ? 'ℹ️ हमारे बारे में' : 'ℹ️ About Us'}
+            </Link>
           </nav>
 
-          <div className="pt-3 border-t border-brand-border/80 flex flex-col gap-2">
+          <div className="pt-2 border-t border-brand-border/80 flex flex-col gap-2">
             {isAuthenticated ? (
               <>
-                {isAdmin && (
-                  <Link
-                    to="/admin"
-                    onClick={handleNavClick}
-                    className="w-full text-center px-4 py-2.5 rounded-xl border border-brand-green bg-brand-greenLight text-brand-green text-sm font-semibold"
-                  >
-                    {t.nav.admin}
-                  </Link>
-                )}
                 <Link
                   to="/profile"
                   onClick={handleNavClick}
-                  className="w-full text-center px-4 py-2.5 rounded-xl border border-brand-border bg-white text-brand-navy text-sm font-medium"
+                  className="w-full text-center px-4 py-2 rounded-xl border border-brand-border bg-white text-brand-navy text-sm font-medium"
                 >
-                  {t.nav.profile}
+                  {lang === 'hi' ? 'मेरी प्रोफाइल' : 'My Profile'}
                 </Link>
                 <button
                   onClick={() => {
                     logout();
                     handleNavClick();
                   }}
-                  className="w-full text-center px-4 py-2.5 rounded-xl text-red-600 bg-red-50 text-sm font-medium"
+                  className="w-full text-center px-4 py-2 rounded-xl text-red-600 bg-red-50 text-sm font-medium cursor-pointer"
                 >
                   {t.nav.logout}
                 </button>
@@ -363,18 +325,18 @@ const Navbar = () => {
               <Link
                 to="/login"
                 onClick={handleNavClick}
-                className="w-full text-center px-4 py-2.5 rounded-xl border border-brand-border bg-white text-brand-navy text-sm font-semibold"
+                className="w-full text-center px-4 py-2 rounded-xl border border-brand-border bg-white text-brand-navy text-sm font-semibold"
               >
-                {t.nav.login}
+                {lang === 'hi' ? 'नागरिक लॉगिन' : 'Login'}
               </Link>
             )}
 
             <Link
               to="/eligibility"
               onClick={handleNavClick}
-              className="w-full text-center px-4 py-3 rounded-xl bg-brand-green text-white text-sm font-bold shadow-card"
+              className="w-full text-center px-4 py-2.5 rounded-xl bg-brand-green text-white text-sm font-bold shadow-card"
             >
-              {t.nav.cta} →
+              {lang === 'hi' ? 'अपनी पात्रता जांचें →' : 'Check Your Eligibility →'}
             </Link>
           </div>
         </div>
