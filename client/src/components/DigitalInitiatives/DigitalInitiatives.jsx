@@ -125,123 +125,57 @@ const DigitalInitiatives = () => {
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" ref={sectionRef}>
       <div
         className="rounded-[32px] sm:rounded-[36px] border border-[#E5E9E2] shadow-[0_8px_30px_rgba(0,0,0,0.04)] relative overflow-hidden"
-        style={{ backgroundColor: '#F3F7F2' }}
+        style={{ backgroundColor: '#FAF9F5' }}
       >
 
-        {/* ══════════ LEFT BG: India Map Silhouette (hidden on mobile) ══════════ */}
+        {/* ══════════ LEFT BG: Real India Map Image Artwork (hidden on mobile) ══════════ */}
         <div
-          className="hidden md:block absolute left-0 top-0 h-full pointer-events-none select-none z-0"
-          style={{ width: '280px' }}
+          className="hidden md:block absolute left-0 top-0 h-full pointer-events-none select-none z-0 overflow-hidden"
+          style={{
+            width: '320px',
+            maskImage: 'linear-gradient(to right, black 50%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to right, black 50%, transparent 100%)'
+          }}
         >
-          <svg
-            viewBox="0 0 280 440"
-            className="w-full h-full"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            {/* Dot grid confined to left panel */}
-            <defs>
-              <pattern id="digiDotL" x="0" y="0" width="13" height="13" patternUnits="userSpaceOnUse">
-                <circle cx="2" cy="2" r="1.3" fill="#168447" fillOpacity="0.28" />
-              </pattern>
-              <clipPath id="mapClip">
-                <path d="M125,22 C138,19 152,28 158,42 C163,54 178,62 186,76 C194,90 184,108 190,124 C196,138 218,148 214,166 C210,180 192,188 188,204 C184,218 196,236 189,256 C183,272 168,288 162,308 C156,324 142,354 128,372 C110,354 106,322 100,304 C92,286 80,264 74,248 C66,232 52,216 56,198 C60,182 84,172 88,156 C94,138 82,116 90,98 C96,82 90,64 96,48 C104,34 114,26 125,22 Z" />
-              </clipPath>
-            </defs>
-
-            {/* Dot grid behind map */}
-            <rect x="0" y="0" width="280" height="440" fill="url(#digiDotL)" />
-
-            {/* India map outer fill */}
-            <path
-              d="M125,22 C138,19 152,28 158,42 C163,54 178,62 186,76 C194,90 184,108 190,124 C196,138 218,148 214,166 C210,180 192,188 188,204 C184,218 196,236 189,256 C183,272 168,288 162,308 C156,324 142,354 128,372 C110,354 106,322 100,304 C92,286 80,264 74,248 C66,232 52,216 56,198 C60,182 84,172 88,156 C94,138 82,116 90,98 C96,82 90,64 96,48 C104,34 114,26 125,22 Z"
-              fill="#A8D5B8"
-              fillOpacity="0.55"
-              stroke="#168447"
-              strokeWidth="1.5"
-              strokeOpacity="0.35"
-            />
-
-            {/* Inner highlight */}
-            <path
-              d="M125,32 C135,30 148,38 154,50 C158,60 170,68 178,80 C184,92 176,108 180,122 C184,134 202,142 198,158 C194,170 178,178 175,192 C172,204 182,220 176,236 C172,248 158,262 153,278 C148,292 136,316 126,330 C110,316 107,290 102,274 C96,258 86,240 80,226 C74,212 64,200 68,186 C72,172 92,164 96,150 C100,136 90,118 96,102 C100,88 95,72 100,58 C106,46 116,36 125,32 Z"
-              fill="#E4F4EB"
-              fillOpacity="0.45"
-            />
-          </svg>
+          <img
+            src="/bg_india_map.jpg"
+            alt="India Map"
+            className="w-full h-full object-contain object-left mix-blend-multiply opacity-55"
+          />
         </div>
 
-        {/* ══════════ RIGHT BG: Parliament of India (hidden on mobile) ══════════ */}
+        {/* ══════════ RIGHT BG: Real Parliament of India Sketch Artwork (hidden on mobile) ══════════ */}
         <div
-          className="hidden md:block absolute right-0 top-0 h-full pointer-events-none select-none z-0"
-          style={{ width: '340px' }}
+          className="hidden md:block absolute right-0 top-0 h-full pointer-events-none select-none z-0 overflow-hidden"
+          style={{
+            width: '380px',
+            maskImage: 'linear-gradient(to left, black 50%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to left, black 50%, transparent 100%)'
+          }}
         >
-          <svg
-            viewBox="0 0 340 340"
-            className="w-full h-full"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <defs>
-              <pattern id="digiDotR" x="0" y="0" width="13" height="13" patternUnits="userSpaceOnUse">
-                <circle cx="2" cy="2" r="1.1" fill="#64748B" fillOpacity="0.14" />
-              </pattern>
-            </defs>
-
-            <rect x="0" y="0" width="340" height="340" fill="url(#digiDotR)" />
-
-            {/* Flag pole */}
-            <line x1="218" y1="20" x2="218" y2="52" stroke="#64748B" strokeWidth="2" strokeOpacity="0.5" />
-            {/* Flag */}
-            <path d="M218,22 L240,29 L218,36 Z" fill="#FF9933" fillOpacity="0.55" />
-            <rect x="218" y="29" width="22" height="4" fill="white" fillOpacity="0.5" />
-            <path d="M218,33 L240,40 L218,47 Z" fill="#138808" fillOpacity="0.55" />
-
-            {/* Dome top arch */}
-            <path d="M148,78 Q218,38 288,78" stroke="#94A3B8" strokeWidth="2.2" strokeOpacity="0.55" fill="none" />
-
-            {/* Outer dome ellipse */}
-            <ellipse cx="218" cy="86" rx="118" ry="26" stroke="#94A3B8" strokeWidth="2" strokeOpacity="0.5" fill="#F8FAFC" fillOpacity="0.22" />
-
-            {/* Inner dome ellipse */}
-            <ellipse cx="218" cy="92" rx="118" ry="26" stroke="#94A3B8" strokeWidth="1.4" strokeOpacity="0.35" fill="none" />
-
-            {/* Columns */}
-            {[110, 124, 138, 152, 166, 180, 194, 208, 222, 236, 250, 264, 278, 292, 306, 320].map((x, i) => (
-              <g key={i}>
-                <line x1={x} y1="92" x2={x} y2="200" stroke="#94A3B8" strokeWidth="1.5" strokeOpacity="0.32" />
-                <rect x={x - 2.5} y="196" width="5" height="5" fill="#94A3B8" fillOpacity="0.25" />
-              </g>
-            ))}
-
-            {/* Base platform ellipses (3 tiers) */}
-            <ellipse cx="218" cy="200" rx="124" ry="29" stroke="#94A3B8" strokeWidth="2.2" strokeOpacity="0.48" fill="#F8FAFC" fillOpacity="0.2" />
-            <path d="M88,210 C88,232 348,232 348,210" stroke="#94A3B8" strokeWidth="2" strokeOpacity="0.42" fill="none" />
-            <path d="M80,222 C80,246 356,246 356,222" stroke="#94A3B8" strokeWidth="2.4" strokeOpacity="0.48" fill="none" />
-            <path d="M72,235 C72,262 364,262 364,235" stroke="#94A3B8" strokeWidth="2.8" strokeOpacity="0.52" fill="none" />
-
-            {/* Ground base */}
-            <rect x="70" y="258" width="296" height="6" rx="2" fill="#94A3B8" fillOpacity="0.22" />
-          </svg>
+          <img
+            src="/bg_parliament.jpg"
+            alt="Parliament of India"
+            className="w-full h-full object-contain object-right mix-blend-multiply opacity-45"
+          />
         </div>
 
-        {/* ══════════ BOTTOM WAVE ══════════ */}
-        <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none select-none z-0 overflow-hidden">
+        {/* ══════════ BOTTOM SOFT WAVE ══════════ */}
+        <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none select-none z-0 overflow-hidden opacity-30">
           <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-full">
             <path
               d="M0,20 C200,60 400,-10 600,30 C800,70 1000,10 1200,40 L1200,120 L0,120 Z"
               fill="#D8EBE0"
-              fillOpacity="0.5"
             />
           </svg>
         </div>
 
-        {/* ══════════ CONTENT ══════════ */}
+        {/* ══════════ CONTENT (LAYERED AT Z-10 ABOVE BACKGROUND IMAGES) ══════════ */}
         <div className="relative z-10 p-4 sm:p-8 lg:p-12 space-y-8">
 
           {/* Header */}
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <div className="reveal inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/80 text-[#168447] text-xs font-bold border border-[#168447]/25 shadow-sm backdrop-blur-sm">
+            <div className="reveal inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/90 text-[#168447] text-xs font-bold border border-[#168447]/25 shadow-sm backdrop-blur-sm">
               <Globe className="w-3.5 h-3.5" />
               <span>{lang === 'hi' ? 'आधिकारिक डिजिटल भारत पहल' : 'Official Digital India Ecosystem'}</span>
             </div>
@@ -284,21 +218,21 @@ const DigitalInitiatives = () => {
                 className="reveal bg-white rounded-[22px] border border-[#E9ECE8] hover:border-[#CBD5E1] shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:-translate-y-2 cursor-pointer"
                 style={{ minHeight: '200px', transitionDelay: `${idx * 80}ms` }}
               >
-                <div className="p-5 flex flex-col items-center text-center space-y-3">
+                <div className="p-4 sm:p-5 flex flex-col items-center text-center space-y-2.5">
                   <div className="group-hover:scale-110 transition-transform duration-300 animate-float" style={{ animationDelay: `${idx * 0.3}s` }}>
                     {card.icon}
                   </div>
-                  <h3 className="text-sm font-black text-[#142338] leading-tight group-hover:text-[#168447] transition-colors">
+                  <h3 className="text-xs sm:text-sm font-black text-[#142338] leading-tight group-hover:text-[#168447] transition-colors">
                     {lang === 'hi' ? card.nameHi : card.nameEn}
                   </h3>
-                  <p className="text-[11px] text-[#5A6A6A] leading-relaxed line-clamp-2">
+                  <p className="text-[10px] sm:text-[11px] text-[#5A6A6A] leading-relaxed line-clamp-2">
                     {lang === 'hi' ? card.descHi : card.descEn}
                   </p>
                 </div>
 
-                <div className={`w-full py-4 bg-gradient-to-b ${card.bgFooter} flex items-center justify-center border-t border-slate-100/80`}>
-                  <div className={`w-8 h-8 rounded-full ${card.btnBg} text-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300`}>
-                    <ChevronRight className="w-4 h-4 ml-0.5" strokeWidth={2.5} />
+                <div className={`w-full py-3 sm:py-4 bg-gradient-to-b ${card.bgFooter} flex items-center justify-center border-t border-slate-100/80`}>
+                  <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full ${card.btnBg} text-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300`}>
+                    <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-0.5" strokeWidth={2.5} />
                   </div>
                 </div>
               </a>
