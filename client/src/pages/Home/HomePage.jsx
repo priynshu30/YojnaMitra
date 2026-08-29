@@ -11,6 +11,7 @@ import CitizenToolsStrip from '../../components/CitizenTools/CitizenToolsStrip';
 import CitizenHub from '../../components/CitizenHub/CitizenHub';
 import HowItWorks from '../../components/HowItWorks/HowItWorks';
 import DigitalInitiatives from '../../components/DigitalInitiatives/DigitalInitiatives';
+import GovLiveUpdates from '../../components/GovLiveUpdates/GovLiveUpdates';
 import { fetchCategories, fetchSchemes } from '../../services/schemeService';
 import { useLanguage } from '../../context/LanguageContext';
 import useScrollReveal from '../../hooks/useScrollReveal';
@@ -105,7 +106,10 @@ const HomePage = () => {
       {/* 6. Digital India Portals */}
       <DigitalInitiatives />
 
-      {/* 6. FAQ — with scroll reveal */}
+      {/* 7. 🔴 Live Government Scheme Updates (Auto-Sync) */}
+      <GovLiveUpdates />
+
+      {/* 8. FAQ — with scroll reveal */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8" ref={faqRef}>
         {/* Divider badge */}
         <div className="reveal relative flex items-center justify-center my-6">

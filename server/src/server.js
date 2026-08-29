@@ -8,6 +8,7 @@ import eligibilityRoutes from './routes/eligibilityRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import { errorHandler } from './middleware/errorHandler.js';
+import { startSchemeSyncCron } from './services/schemeAutoSyncService.js';
 
 dotenv.config();
 
@@ -26,6 +27,10 @@ app.use(morgan('dev'));
 
 // Connect Database (with automatic fallback to Memory store)
 connectDB();
+
+// 🔄 Start Automatic Scheme Sync Cron Job (runs every 6 hours)
+// Fetches latest PIB & official government scheme announcements
+startSchemeSyncCron();
 
 // API Health / Status
 app.get('/api/health', (req, res) => {

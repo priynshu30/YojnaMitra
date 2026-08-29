@@ -11,21 +11,25 @@ import {
   Layers,
   ChevronLeft,
   ChevronRight,
-  ShieldCheck
+  ShieldCheck,
+  X
 } from 'lucide-react';
 import SchemeCard from '../../components/SchemeCard/SchemeCard';
 import { fetchSchemes, fetchCategories, fetchStates } from '../../services/schemeService';
+import { FALLBACK_CATEGORIES, FALLBACK_STATES, filterFallbackSchemes } from '../../data/fallbackData';
 import { useLanguage } from '../../context/LanguageContext';
 
 const SchemesPage = () => {
   const { lang, t } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [schemes, setSchemes] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [states, setStates] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [pagination, setPagination] = useState({ page: 1, pages: 1, total: 0 });
+  // Initialize with fallback datasets so dropdowns and cards are never empty on live
+  const initialFallback = filterFallbackSchemes();
+  const [schemes, setSchemes] = useState(initialFallback.data || []);
+  const [categories, setCategories] = useState(FALLBACK_CATEGORIES);
+  const [states, setStates] = useState(FALLBACK_STATES);
+  const [loading, setLoading] = useState(false);
+  const [pagination, setPagination] = useState(initialFallback.pagination || { page: 1, pages: 1, total: 10 });
 
   // Filters State from URL query or defaults
   const search = searchParams.get('search') || '';
@@ -38,6 +42,12 @@ const SchemesPage = () => {
 
   const [searchInput, setSearchInput] = useState(search);
 
+  // Sync search input if URL changes
+  useEffect(() => {
+    setSearchInput(search);
+  }, [search]);
+
+  // Load Categories & States metadata
   useEffect(() => {
     const loadInitialMeta = async () => {
       try {
@@ -45,15 +55,20 @@ const SchemesPage = () => {
           fetchCategories(),
           fetchStates()
         ]);
-        if (catsRes && catsRes.data) setCategories(catsRes.data);
-        if (statesRes && statesRes.data) setStates(statesRes.data);
+        if (catsRes && catsRes.data && Array.isArray(catsRes.data) && catsRes.data.length > 0) {
+          setCategories(catsRes.data);
+        }
+        if (statesRes && statesRes.data && Array.isArray(statesRes.data) && statesRes.data.length > 0) {
+          setStates(statesRes.data);
+        }
       } catch (e) {
-        console.error('Error fetching categories or states:', e);
+        console.warn('Using local categories/states fallback:', e);
       }
     };
     loadInitialMeta();
   }, []);
 
+  // Fetch Schemes whenever filter params change
   useEffect(() => {
     const loadSchemesData = async () => {
       try {
@@ -69,14 +84,39 @@ const SchemesPage = () => {
           limit: 9
         });
 
-        if (res && res.data) {
+        if (res && res.data && Array.isArray(res.data)) {
           setSchemes(res.data);
           if (res.pagination) {
             setPagination(res.pagination);
           }
+        } else {
+          const fallbackRes = filterFallbackSchemes({
+            search,
+            category: category === 'All' ? '' : category,
+            level: level === 'All' ? '' : level,
+            state: state === 'All India' || state === 'All' ? '' : state,
+            beneficiary: beneficiary === 'all' ? '' : beneficiary,
+            sort,
+            page,
+            limit: 9
+          });
+          setSchemes(fallbackRes.data);
+          setPagination(fallbackRes.pagination);
         }
       } catch (err) {
-        console.error('Error fetching schemes:', err);
+        console.warn('Using local schemes fallback:', err);
+        const fallbackRes = filterFallbackSchemes({
+          search,
+          category: category === 'All' ? '' : category,
+          level: level === 'All' ? '' : level,
+          state: state === 'All India' || state === 'All' ? '' : state,
+          beneficiary: beneficiary === 'all' ? '' : beneficiary,
+          sort,
+          page,
+          limit: 9
+        });
+        setSchemes(fallbackRes.data);
+        setPagination(fallbackRes.pagination);
       } finally {
         setLoading(false);
       }
@@ -98,7 +138,15 @@ const SchemesPage = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    updateFilter('search', searchInput);
+    updateFilter('search', searchInput.trim());
+  };
+
+  const handleSearchChange = (e) => {
+    const val = e.target.value;
+    setSearchInput(val);
+    if (val === '') {
+      updateFilter('search', '');
+    }
   };
 
   const clearFilters = () => {
@@ -135,14 +183,26 @@ const SchemesPage = () => {
             <input
               type="text"
               value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              placeholder={t.common.searchPlaceholder}
-              className="w-full pl-11 pr-4 py-3 rounded-xl border border-brand-border bg-brand-warmBg/50 text-sm text-brand-navy focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green"
+              onChange={handleSearchChange}
+              placeholder={lang === 'hi' ? 'योजना का नाम, कीवर्ड या विभाग खोजें (जैसे: किसान, आवास, छात्रवृत्ति)...' : 'Search scheme name, department or keyword (e.g. Kisan, Awas, Scholarship)...'}
+              className="w-full pl-11 pr-10 py-3 rounded-xl border border-brand-border bg-brand-warmBg/50 text-sm text-brand-navy focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green"
             />
+            {searchInput && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchInput('');
+                  updateFilter('search', '');
+                }}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
           </div>
           <button
             type="submit"
-            className="px-5 py-3 rounded-xl bg-brand-green text-white text-xs sm:text-sm font-bold shadow-sm hover:bg-brand-greenHover transition-all shrink-0"
+            className="px-6 py-3 rounded-xl bg-brand-green text-white text-xs sm:text-sm font-bold shadow-sm hover:bg-brand-greenHover transition-all shrink-0 cursor-pointer"
           >
             {lang === 'hi' ? 'खोजें' : 'Search'}
           </button>
@@ -159,11 +219,11 @@ const SchemesPage = () => {
             <select
               value={level}
               onChange={(e) => updateFilter('level', e.target.value)}
-              className="w-full p-2.5 rounded-xl border border-brand-border bg-white text-xs font-medium text-brand-navy focus:outline-none focus:border-brand-green"
+              className="w-full p-2.5 rounded-xl border border-brand-border bg-white text-xs font-semibold text-brand-navy focus:outline-none focus:border-brand-green cursor-pointer"
             >
-              <option value="All">{t.common.allLevels}</option>
-              <option value="Central">{lang === 'hi' ? 'केंद्र सरकार (Central)' : 'Central Govt'}</option>
-              <option value="State">{lang === 'hi' ? 'राज्य सरकार (State)' : 'State Govt'}</option>
+              <option value="All">{lang === 'hi' ? 'सभी स्तर (केंद्र / राज्य)' : 'All Levels (Central / State)'}</option>
+              <option value="Central">{lang === 'hi' ? 'केंद्र सरकार (Central Govt)' : 'Central Govt'}</option>
+              <option value="State">{lang === 'hi' ? 'राज्य सरकार (State Govt)' : 'State Govt'}</option>
             </select>
           </div>
 
@@ -175,12 +235,12 @@ const SchemesPage = () => {
             <select
               value={category}
               onChange={(e) => updateFilter('category', e.target.value)}
-              className="w-full p-2.5 rounded-xl border border-brand-border bg-white text-xs font-medium text-brand-navy focus:outline-none focus:border-brand-green"
+              className="w-full p-2.5 rounded-xl border border-brand-border bg-white text-xs font-semibold text-brand-navy focus:outline-none focus:border-brand-green cursor-pointer"
             >
-              <option value="All">{t.common.allCategories}</option>
+              <option value="All">{lang === 'hi' ? 'सभी श्रेणियाँ' : 'All Categories'}</option>
               {categories.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
+                <option key={c.id || c.name} value={c.id || c.name}>
+                  {lang === 'hi' ? (c.name || c.nameEn) : (c.nameEn || c.name)}
                 </option>
               ))}
             </select>
@@ -194,9 +254,10 @@ const SchemesPage = () => {
             <select
               value={state}
               onChange={(e) => updateFilter('state', e.target.value)}
-              className="w-full p-2.5 rounded-xl border border-brand-border bg-white text-xs font-medium text-brand-navy focus:outline-none focus:border-brand-green"
+              className="w-full p-2.5 rounded-xl border border-brand-border bg-white text-xs font-semibold text-brand-navy focus:outline-none focus:border-brand-green cursor-pointer"
             >
-              {states.map((s) => (
+              <option value="All India">{lang === 'hi' ? 'सभी राज्य (All India)' : 'All India (All States)'}</option>
+              {states.filter(s => s !== 'All India' && s !== 'All').map((s) => (
                 <option key={s} value={s}>
                   {s}
                 </option>
@@ -212,7 +273,7 @@ const SchemesPage = () => {
             <select
               value={sort}
               onChange={(e) => updateFilter('sort', e.target.value)}
-              className="w-full p-2.5 rounded-xl border border-brand-border bg-white text-xs font-medium text-brand-navy focus:outline-none focus:border-brand-green"
+              className="w-full p-2.5 rounded-xl border border-brand-border bg-white text-xs font-semibold text-brand-navy focus:outline-none focus:border-brand-green cursor-pointer"
             >
               <option value="verified">{lang === 'hi' ? 'हाल ही में सत्यापित' : 'Recently Verified'}</option>
               <option value="newest">{lang === 'hi' ? 'नवीनतम योजनाएं' : 'Newest First'}</option>
@@ -225,12 +286,12 @@ const SchemesPage = () => {
         {/* Filter Summary & Reset */}
         {(search || category !== 'All' || level !== 'All' || state !== 'All India') && (
           <div className="flex items-center justify-between pt-2 text-xs">
-            <span className="text-brand-textMuted">
-              {lang === 'hi' ? 'फ़िल्टर लागू हैं' : 'Active filters'}
+            <span className="text-brand-textMuted font-medium">
+              {lang === 'hi' ? 'फ़िल्टर लागू हैं' : 'Active filters applied'}
             </span>
             <button
               onClick={clearFilters}
-              className="text-brand-green font-bold hover:underline"
+              className="text-brand-green font-bold hover:underline cursor-pointer"
             >
               {lang === 'hi' ? 'सभी फ़िल्टर साफ़ करें' : 'Clear All Filters'}
             </button>
@@ -268,20 +329,20 @@ const SchemesPage = () => {
           </h3>
           <p className="text-xs text-brand-textMuted leading-relaxed">
             {lang === 'hi'
-              ? 'आपके द्वारा चुने गए फ़िल्टर या कीवर्ड से मेल खाती कोई योजना उपलब्ध नहीं है। कृपया फ़िल्टर बदलकर पुनः प्रयास करें।'
-              : 'No schemes match your selected search criteria. Try modifying or clearing your filters.'}
+              ? 'आपके द्वारा खोजे गए कीवर्ड या फ़िल्टर से मेल खाती कोई योजना नहीं मिली। कृपया फ़िल्टर रीसेट करें।'
+              : 'No schemes match your search criteria. Try modifying or clearing your filters.'}
           </p>
           <button
             onClick={clearFilters}
-            className="px-4 py-2 rounded-xl bg-brand-green text-white text-xs font-bold"
+            className="px-4 py-2 rounded-xl bg-brand-green text-white text-xs font-bold hover:bg-brand-greenHover transition-all cursor-pointer"
           >
-            {lang === 'hi' ? 'फ़िल्टर हटाएं' : 'Reset Filters'}
+            {lang === 'hi' ? 'फ़िल्टर हटाएं (Reset)' : 'Reset Filters'}
           </button>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {schemes.map((scheme) => (
-            <SchemeCard key={scheme.slug || scheme._id} scheme={scheme} />
+            <SchemeCard key={scheme.slug || scheme._id || scheme.id} scheme={scheme} />
           ))}
         </div>
       )}
@@ -292,7 +353,7 @@ const SchemesPage = () => {
           <button
             disabled={page <= 1}
             onClick={() => updateFilter('page', (page - 1).toString())}
-            className="p-2 rounded-xl border border-brand-border bg-white text-brand-navy disabled:opacity-40 hover:border-brand-green"
+            className="p-2 rounded-xl border border-brand-border bg-white text-brand-navy disabled:opacity-40 hover:border-brand-green cursor-pointer disabled:cursor-not-allowed"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
@@ -304,7 +365,7 @@ const SchemesPage = () => {
           <button
             disabled={page >= pagination.pages}
             onClick={() => updateFilter('page', (page + 1).toString())}
-            className="p-2 rounded-xl border border-brand-border bg-white text-brand-navy disabled:opacity-40 hover:border-brand-green"
+            className="p-2 rounded-xl border border-brand-border bg-white text-brand-navy disabled:opacity-40 hover:border-brand-green cursor-pointer disabled:cursor-not-allowed"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
