@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
+import MarqueeTicker from './components/MarqueeTicker/MarqueeTicker';
 import Footer from './components/Footer/Footer';
 import HomePage from './pages/Home/HomePage';
 import SchemesPage from './pages/Schemes/SchemesPage';
@@ -44,6 +45,7 @@ function App() {
             <div className="flex flex-col min-h-screen bg-brand-warmBg text-brand-textMain font-sans antialiased selection:bg-brand-green selection:text-white">
               <ScrollToTop />
               <Navbar />
+              <MarqueeTicker />
               
               <main className="flex-grow">
                 <Routes>

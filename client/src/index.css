@@ -276,3 +276,26 @@ svg { max-width: 100%; }
 ───────────────────────────────────────────────── */
 .scrollbar-none::-webkit-scrollbar { display: none; }
 .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ─────────────────────────────────────────────────
+   SMOOTH MARQUEE ANIMATION
+───────────────────────────────────────────────── */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 38s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.mask-linear-marquee {
+  mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+}

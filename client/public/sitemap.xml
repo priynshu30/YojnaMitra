@@ -1,39 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Core Main Pages -->
   <url>
     <loc>https://yojna-mitra-gold.vercel.app/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-08-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://yojna-mitra-gold.vercel.app/schemes</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-08-29</lastmod>
     <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://yojna-mitra-gold.vercel.app/eligibility</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://yojna-mitra-gold.vercel.app/pdf-tools</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-08-29</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://yojna-mitra-gold.vercel.app/eligibility</loc>
-    <lastmod>2026-08-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://yojna-mitra-gold.vercel.app/about</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-08-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://yojna-mitra-gold.vercel.app/faq</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-08-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <!-- Individual Verified Schemes for Google Indexing -->
+  <url>
+    <loc>https://yojna-mitra-gold.vercel.app/schemes/pm-kisan-samman-nidhi</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://yojna-mitra-gold.vercel.app/schemes/nsp-post-matric-scholarship</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://yojna-mitra-gold.vercel.app/schemes/pmay-gramin-housing</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://yojna-mitra-gold.vercel.app/schemes/pm-mudra-yojana-business-loan</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://yojna-mitra-gold.vercel.app/schemes/ayushman-bharat-pmjay-health</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://yojna-mitra-gold.vercel.app/schemes/sukanya-samriddhi-yojana</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://yojna-mitra-gold.vercel.app/schemes/up-mukhyamantri-kanya-sumangala-yojana</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://yojna-mitra-gold.vercel.app/schemes/pm-svanidhi-street-vendors</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://yojna-mitra-gold.vercel.app/schemes/pm-kaushal-vikas-yojana-skill</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://yojna-mitra-gold.vercel.app/schemes/pm-surya-ghar-muft-bijli-yojana</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 </urlset>

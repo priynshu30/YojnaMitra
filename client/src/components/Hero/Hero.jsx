@@ -38,6 +38,8 @@ const Hero = () => {
           <img
             src="/hero_bg.jpg"
             alt="YojnaMitra — Indian Citizen Welfare"
+            fetchpriority="high"
+            loading="eager"
             className="w-full h-full object-cover object-[center_top]"
           />
           {/* Subtle gradient overlay ensuring crystal clear text contrast on both mobile & desktop */}
